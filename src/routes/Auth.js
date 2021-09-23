@@ -8,7 +8,8 @@ const Auth = () => {
         password: '',
     });
     const [newAccount, setNewAccount] = useState(true);
-    const { email, password} = inputs
+    const [error, setError] = useState('');
+    const { email, password } = inputs
     const onChange = (e) => {
         // const {target: {name, value}} = e;
         const {name, value} = e.target;
@@ -19,11 +20,18 @@ const Auth = () => {
     }
     const onSubmit = async (e) => {
         e.preventDefault();
-        if (newAccount) {
-            await createUserWithEmailAndPassword(authService, email, password)
-        } else {
-            await signInWithEmailAndPassword(authService, email, password)
+        try {
+            if (newAccount) {  // Sign In
+                await createUserWithEmailAndPassword(authService, email, password);
+            } else {  // Log In
+                await signInWithEmailAndPassword(authService, email, password);
+            }
+        } catch (error) {
+            setError(error.message);
         }
+    }
+    const toggleAccount = () => {
+        setNewAccount(prev => !prev);
     }
     return (
         <div>
@@ -32,9 +40,15 @@ const Auth = () => {
                 <input type="password" name="password" placeholder="password" value={password} required onChange={onChange} />
                 <input type="submit" value={ newAccount ? "Create Account" : "Log In"} />
             </form>
+            <div onClick={toggleAccount}>
+                {newAccount ? "Sign In" : "Log In"}
+            </div>
             <div>
                 <button>Continue With Google</button>
                 <button>Continue With Github</button>
+            </div>
+            <div>
+                {error}
             </div>
         </div>
     )
