@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { deleteDoc, doc, updateDoc } from '@firebase/firestore';
-import { dbService } from 'fbase';
+import { dbService, storageService } from 'fbase';
+import { deleteObject, ref } from '@firebase/storage';
 
 const Nweet = ({ nweetObj, isOwner }) => {
   const [editing, setEditing] = useState(false);
@@ -10,6 +11,7 @@ const Nweet = ({ nweetObj, isOwner }) => {
     if (ok) {
       await deleteDoc(doc(dbService, `nweets/${nweetObj.id}`));
       // TODO: 사진도 같이 지우기
+      await deleteObject(ref(storageService, nweetObj.attachmentURL));
     }
   };
 
