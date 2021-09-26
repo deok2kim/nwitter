@@ -5,6 +5,9 @@ const Nweet = ({ nweetObj, isOwner }) => {
     <div>
       <h4>
         {nweetObj.text}
+        {nweetObj.attachmentURL && (
+          <img src={nweetObj.attachmentURL} alt={nweetObj.text} />
+        )}
         {isOwner && (
           <>
             <button>Delete</button>
