@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 function Navigation({ userObj }) {
+  console.log('로그인한 유저', userObj);
   return (
     <nav>
       <ul>

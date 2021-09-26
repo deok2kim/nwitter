@@ -14,8 +14,8 @@ const Profile = ({ userObj, refreshUser }) => {
     userObj.displayName ? userObj.displayName : '',
   );
   const history = useHistory();
-  const onLogOutClick = () => {
-    signOut(authService);
+  const onLogOutClick = async () => {
+    await signOut(authService);
     console.log('로그아웃');
     history.push('/');
   };
