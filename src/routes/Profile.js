@@ -9,7 +9,7 @@ import {
   query,
   where,
 } from '@firebase/firestore';
-const Profile = ({ userObj }) => {
+const Profile = ({ userObj, refreshUser }) => {
   const [newDisplayName, setNewDisplayName] = useState(
     userObj.displayName ? userObj.displayName : '',
   );
@@ -44,8 +44,11 @@ const Profile = ({ userObj }) => {
   const onSubmit = async (e) => {
     e.preventDefault();
     if (newDisplayName !== userObj.displayName) {
-      await updateProfile(userObj, { displayName: newDisplayName });
-      console.log('프로필 업데이트');
+      await updateProfile(authService.currentUser, {
+        displayName: newDisplayName,
+      });
+      refreshUser();
+      console.log(userObj);
     }
   };
   return (
