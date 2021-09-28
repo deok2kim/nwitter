@@ -34,44 +34,42 @@ const Nweet = ({ nweetObj, isOwner }) => {
   };
   return (
     <div className="nweet">
-      <h4>
-        {editing ? (
-          <>
-            <form onSubmit={onSubmit} className="container nweetEdit">
-              <input
-                onChange={onChange}
-                type="text"
-                placeholder="update nweet"
-                value={newNweet}
-                required
-                autoFocus
-                className="formInput"
-              />
-              <input type="submit" value="update" className="formBtn"></input>
-            </form>
-            <span onClick={onToggleEditing} className="formBtn cancelBtn">
-              Cancel
-            </span>
-          </>
-        ) : (
-          <>
-            {nweetObj.text}
-            {nweetObj.attachmentURL && (
-              <img src={nweetObj.attachmentURL} alt={nweetObj.text} />
-            )}
-            {isOwner && (
-              <span className="nweet__action">
-                <span onClick={onDeleteClick}>
-                  <FontAwesomeIcon icon={faTrash} />
-                </span>
-                <span onClick={onToggleEditing}>
-                  <FontAwesomeIcon icon={faPencilAlt} />
-                </span>
+      {editing ? (
+        <>
+          <form onSubmit={onSubmit} className="container nweetEdit">
+            <input
+              onChange={onChange}
+              type="text"
+              placeholder="update nweet"
+              value={newNweet}
+              required
+              autoFocus
+              className="formInput"
+            />
+            <input type="submit" value="Update Nweet" className="formBtn" />
+          </form>
+          <span onClick={onToggleEditing} className="formBtn cancelBtn">
+            Cancel
+          </span>
+        </>
+      ) : (
+        <>
+          <h4>{nweetObj.text}</h4>
+          {nweetObj.attachmentURL && (
+            <img src={nweetObj.attachmentURL} alt={nweetObj.text} />
+          )}
+          {isOwner && (
+            <span className="nweet__actions">
+              <span onClick={onDeleteClick}>
+                <FontAwesomeIcon icon={faTrash} />
               </span>
-            )}
-          </>
-        )}
-      </h4>
+              <span onClick={onToggleEditing}>
+                <FontAwesomeIcon icon={faPencilAlt} />
+              </span>
+            </span>
+          )}
+        </>
+      )}
     </div>
   );
 };
